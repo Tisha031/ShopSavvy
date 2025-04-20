@@ -1,0 +1,72 @@
+{% extends 'supplier/supplayout.html' %}
+{% block content %}
+  <div class="container">
+    <div class="page-inner">
+      {#  <div class="page-header">
+        <h3 class="fw-bold mb-3">Tables</h3>
+        <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#">
+              <i class="icon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Tables</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Basic Tables</a>
+          </li>
+        </ul>
+      </div>  #}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">VIEW CATEGORY</div>
+            </div>
+            <div class="card-body">
+              {#  <div class="card-sub">
+                 VIEW CATEGORY
+              </div>  #}
+              <table class="table mt-3">
+                <thead>
+                  <tr>
+                    <th scope="col">no</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Category Description</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% set count = 1 %}
+                  {% for t in see %}
+                    {% set count = loop.index %}
+
+                    <tr>
+                      <td>{{ count }}</td>
+                      <td>{{ t.1 }}</td>
+                      <td>{{ t.2 }}</td>
+
+                      <td>
+                        <div class="form-button-action">
+                          <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"><i class="fa fa-edit"></i></button>
+                          <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

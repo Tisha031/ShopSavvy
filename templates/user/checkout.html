@@ -1,0 +1,223 @@
+{% extends 'user/userlayout.html' %}
+{% block content %}
+
+<div class="checkout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="billing-address">
+                    <h2>Billing Address</h2>
+                  
+
+                        <div class="row">
+
+                        <form class="forms-sample" action="{{url_for('placeorder')}}" method="post">
+
+
+                            <div class="row">
+
+                            <div class="col-md-6">
+                                <label>Name</label>
+                                <input class="form-control" type="text" value="{{ detail[2] }}" name="name" id="name" placeholder="First Name" readonly>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <label>E-mail</label>
+                                <input class="form-control" type="email" value="{{ detail[1] }}" name="u_email" id="email" placeholder="E-mail" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Mobile No</label>
+                                <input class="form-control" type="number" value="{{ detail[3] }}" name="mobile" id="mobile" placeholder="Mobile No">
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label>Address</label>
+                                <input class="form-control" type="textarea" value="{{ detail[7] }}" name="address" id="address" placeholder="Address">
+                            </div>
+                           
+
+                            <div class="col-md-6">
+                                <label>Country</label>
+                                <select class="custom-select" name="country" id="country">
+                                    <option>INDIA</option>
+                                    
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>City</label>
+                                <input class="form-control" type="text" name="city" placeholder="City" id="city">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>State</label>
+                                <input class="form-control" type="text" name="state" placeholder="State" id="state">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>ZIP Code</label>
+                                <input class="form-control" type="text" name="pin_code" placeholder="ZIP Code" id="pincode">
+                            </div>
+                        </div>
+
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Summary and Payment -->
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="checkout-summary">
+
+                        <h2>Cart Total</h2>
+                        <div class="checkout-content">
+                            <h3>Products</h3>
+                            {% for cart in cart %}
+                            <p>{{ cart[7] }}<span>{{ cart[8]*cart[3] }} </span></p>
+                            {% endfor %}  
+                            {#  <p class="sub-total">Sub Total <span>₹{{total}}</span></p>  #}
+                            <p>
+                                Sub Total<span id="sub-total">₹{{total}}</span>
+                              </p>
+                            <p class="ship-cost">GST <span>{{gst}}</span></p>
+                            <h4>Grand Total <span id="grand-total-amount">₹{{gsttotal}}</span></h4>
+                            <input type="hidden" name="total_amt" id="gt" value="{{gsttotal}}">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="checkout-payment">
+                        <h2>Payment Methods</h2>
+                        {#  <div class="payment-methods">
+                            <div class="payment-method">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="payment-1" name="payment" value="online">
+                                    <label class="custom-control-label" for="payment-1">ONLINE</label>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="payment-method">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="payment-5" name="payment" value="cod">
+                                    <label class="custom-control-label" for="payment-5">CASH ON DELIVERY</label>
+                                </div>
+                            </div>
+                        </div>  #}
+
+                        <div class="payment-methods">
+                            <label class="text-white text-center mb-2">Payment Method:</label><br>
+                            <input type="radio" id="a3" name="pymnt_method" value="cash">
+                            <label for="cash" class="text-white text-center mb-2">Cash</label><br>
+
+                            <input type="radio" name="pymnt_method" value="online" onclick="senemail()">
+                            <label for="online" class="text-white text-center mb-2">Online</label>
+                        </div>
+
+                        <div class="checkout-btn mt-4">
+                           
+                            <button type="submit" class="btn btn-primary">Place Order</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+      </form>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="text/javascript">
+
+    function senemail() {
+        const randomNum = Math.floor(100000 + Math.random() * 900000);
+        var name = $("#name").val();
+        var u_email = $("#u_email").val();
+        var mobile = $("#mobile").val();
+        var address = $("#address").val();
+        var country = $("#country").val();
+        var state = $("#state").val();
+        var city = $("#city").val();
+        var pincode = $("#pincode").val();
+        var amt = $('#gt').val();
+     
+        // alert (amt);
+        // alert (name);
+        // alert (pincode);
+
+        var merchant_total = amt*100;
+ 
+        var merchant_order_id = "123";
+        var currency_code_id = "INR";
+        var options = {
+            "key": "rzp_test_XkwFHVWAFVI7rU",
+            "amount":amt*100, // 2000 paise = INR 20
+            "name": "ShopSavvy",
+            "description": "Paymnet of Mr./Ms. "+name,
+
+            "currency": "INR",
+            "netbanking": true,
+            prefill: {
+                name: name,
+                email: email,
+                contact: 6353138890,
+
+            },
+            notes: {
+                soolegal_order_id: merchant_order_id,
+            },
+            "handler": function (response) {
+               
+                // Payment is successful
+                // Send data to Flask route using AJAX
+                var data = {
+                    
+                    'name': name,
+                    'email': email,
+                    'mobile': mobile,
+                    'address': address,
+                    'country': country,
+                    'state': state,
+                    'city': city,
+                    'pincode': pincode,
+                    
+                    'amt': amt
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://127.0.0.1:5000/user/chkout',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (response) {
+                        // Handle success
+                        console.log(response);
+                        // Redirect or do something else
+                        window.location.href="/profile"
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                        // Redirect or do something else
+                    }
+                });
+
+            },  
+            "theme": {
+                "color": "#FF6600"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+</script>
+{% endblock %}

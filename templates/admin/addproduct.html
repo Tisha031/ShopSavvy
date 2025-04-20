@@ -1,0 +1,150 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+
+<style>
+    .form-group.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group.inline label {
+    flex: 1;
+}
+
+.form-group.inline input[type="checkbox"] {
+    margin-left: 10px;
+}
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          ADD NEW PRODUCT
+        </h3>
+      </div>
+
+      <div class="row">
+        <div class="col-11 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              
+              <form class="forms-sample" method="POST" action="{{url_for('add_prdct_process')}}" enctype="multipart/form-data">
+
+                <div class="form-group">
+                  <label for="exampleInputcategory">Category<span style="color:red">*</span></label>
+                  <select class="form-control" name="cat_id" id="category" required>
+                    <option value="" disabled selected>Select category</option>
+                    {% for c in cat %}
+                      <option value="{{ c[0] }}">{{ c[1] }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="exampleInputsubcategory">Subcategory<span style="color:red">*</span></label>
+                  <select class="form-control" name="subcat_id" id="subcategory" required>
+                    <option value="">Select subcategory</option>
+                  </select>
+                </div>
+                
+
+                <script>
+                  var allSubcategories = [
+                    {% for s in subcat %}
+                      {
+                        id: "{{ s[0] }}",
+                        cat_id: "{{ s[1] }}",
+                        name: "{{ s[3] }}"
+                      }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                  ];
+                </script>
+                
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                $(document).ready(function() {
+                  $('#category').on('change', function() {
+                    var selectedCatId = $(this).val();
+                    var $subcategory = $('#subcategory');
+                    $subcategory.empty().append('<option value="">Select subcategory</option>');
+
+                    if (selectedCatId) {
+                      var filtered = allSubcategories.filter(function(sub) {
+                        return sub.cat_id === selectedCatId;
+                      });
+
+                      $.each(filtered, function(i, sub) {
+                        $subcategory.append(
+                          $('<option>', { value: sub.id, text: sub.name })
+                        );
+                      });
+                    }
+                  });
+                });
+                </script>
+
+                <div class="form-group">
+                  <label for="exampleInputproduct name">Product Name <span style="color:red">*</span></label>
+                  <input type="text" class="form-control" id="exampleInputproductname" placeholder="Enter product name" name="prdct_name" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputproduct description">Product Description <span style="color:red">*</span></label>
+                  <input type="textarea" class="form-control" id="exampleInputdesc" placeholder="Enter product description" name="description" required>
+                </div>
+                 
+                
+
+                  <div class="form-group">
+                  <label for="exampleInputpp">Price <span style="color:red">*</span></label>
+                  <input type="number" class="form-control" id="exampleInputpp" placeholder="Enter price" name="price" required>
+                </div>
+
+                {#  <div class="form-group">
+                  <label for="exampleInputstatus">Status <span style="color:red">*</span></label>
+                  <select class="form-control" name="p_status" required>
+                    <option value="0">Pending</option>
+                    <option value="1">In Stock</option>
+                    <option value="2">Out of Stock</option>
+                  </select>
+                </div>  #}
+
+                <div class="form-group">
+                  <label for="exampleInputimg">Image upload <span style="color:red">*</span></label>
+                    <input type="file" class="form-control" id="imageUpload" accept="image/*" onchange="validateFileType()" placeholder="JPG/PNG format" name="p_image" required> 
+                  </div>
+
+                <button class="btn btn-light">Cancel </button> &nbsp; 
+                <button type="submit" name="submit" class="btn btn-primary mr-2">Add New Product</button>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+<script>
+  const imageInput = document.getElementById('imageUpload');
+
+  imageInput.addEventListener('change', function () {
+      const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // Allowed formats
+      const file = this.files[0]; // Get the selected file
+
+      if (file) {
+          if (!allowedExtensions.includes(file.type)) {
+              alert('Invalid file format! Please select a JPEG, PNG, GIF, or WebP image.');
+              this.value = ''; // Clear the input
+          }
+      }
+  });
+</script>

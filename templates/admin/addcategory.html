@@ -1,0 +1,62 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+
+<style>
+    .form-group.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group.inline label {
+    flex: 1;
+}
+
+.form-group.inline input[type="checkbox"] {
+    margin-left: 10px;
+}
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          ADD NEW CATEGORY
+        </h3>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              
+              <form class="forms-sample" method="POST" action="{{url_for('add_cat_process')}}">
+                <h1>{{ total_cat }}</h1>
+                <div class="form-group">
+                  <label for="exampleInputcategory name">Category Name <span style="color:red">*</span></label>
+                  <input type="text" class="form-control" id="exampleInputcategoryname" placeholder="Enter category name" name="cat_name" required>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleInputcategory description">Category Description <span style="color:red">*</span></label>
+                  <input type="textarea" class="form-control" id="exampleInputcategorydesc" placeholder="Enter category description" name="description" required>
+                </div>
+
+
+                  <button class="btn btn-light">Cancel</button> &nbsp; 
+                <button type="submit" class="btn btn-primary mr-2">Add New Category</button>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}

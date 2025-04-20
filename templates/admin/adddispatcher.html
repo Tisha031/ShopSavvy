@@ -1,0 +1,143 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+
+<style>
+    .center {
+            text-align: center;
+        } 
+</style>
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          ADD NEW DISPATCHER
+        </h3>
+
+        <h3 class="page-title" style="text-align: right;" >
+          VIEW DISPATCHER
+        </h3>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-4 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">  
+              <form class="forms-sample" method="POST" action="{{url_for('add_dis_process')}}">
+                
+                <div class="form-group">
+                  <label for="exampleInputdisname">Dispatcher Name <span style="color:red">*</span></label>
+                  <input type="text" class="form-control" id="exampleInputdisname" placeholder="Enter dispatcher name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputno">Mobile No<span style="color:red">*</span></label>
+                  <input type="tel" class="form-control" id="exampleInputno" placeholder="Enter mobile no" name="mobile" required>
+                </div>
+
+                <div class="form-group" >
+                  <label for="exampleInputEmail">Email <span style="color:red">*</span></label>
+                  <input type="email" class="form-control form-control-lg" id="exampleInputEmail" placeholder="enter valid email id" name="email" required>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleInputPassword">Password <span style="color:red">*</span></label>
+                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword" placeholder="Password" name="password" required>
+                </div>
+
+                  
+                  <button type="submit" class="btn btn-primary mr-2">Add New Dispatcher</button>
+                
+              
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>NAME</th>
+                      <th>EMAIL</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% set count = 1 %}
+                    {% for t in acc %}
+                      {% set count = loop.index %}
+  
+                      <tr>
+                        <td>{{ count }}</td>
+                        <td>{{ t.1 }}</td>
+                        <td>{{ t.3 }}</td>
+                        <td>
+                          {% if t[5] == 0 %}
+    <a href="{{ url_for('unblock', disp_id=t[0]) }}" type="button" class="btn btn-success">
+        <i class="fa fa-unlock"></i>
+    </a>
+    <a href="{{ url_for('block', disp_id=t[0]) }}" type="button" class="btn btn-warning">
+        <i class="fa fa-ban"></i>
+    </a>
+{% elif t[5] == 1 %}
+    <a href="{{ url_for('unblock', disp_id=t[0]) }}" type="button" class="btn btn-success">
+        <i class="fa fa-unlock"></i>
+    </a>
+{% endif %}
+
+                            {#  <a  class = "btn btn-info"><i class="fa fa-edit" ></i></a>  #}
+                            <button  id="deleteButton{{ t[0] }}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal{{ t[0] }}"><i class="fa fa-trash"></i></button>
+                          </td>
+    
+                      <div class="modal fade" id="DeleteModal{{ t[0] }}" tabindex="-1" role="dialog" aria-labelledby="DeleteModalTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="DeleteModalTitle">Delete Dispatcher</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <h4 class="text-primary">Are you sure you want to delete this Dispatcher?</h4>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                <a href="{{ url_for('delete_dispatcher', disp_id=t[0]) }}" class="btn btn-danger">Delete</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
