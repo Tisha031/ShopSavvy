@@ -1,0 +1,204 @@
+{% extends '/user/userlayout.html' %}
+{% block content %}
+<style>
+#customImage,
+.sticker {
+  mix-blend-mode: multiply;
+  opacity: 1;
+  pointer-events: auto;
+  cursor: move;
+  z-index: 9;
+  position: absolute;
+  width: 100px;
+}
+
+.customText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 10;
+  padding: 2px 6px;
+  cursor: move;
+  color: #87CEEB;
+}
+
+.sticker-gallery {
+  display: none;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sticker-gallery img {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+}
+.sticker-gallery img:hover {
+  border-color: #007bff;
+}
+</style>
+
+<div class="container py-5">
+  {% for t in data %}
+  <div class="row mb-5">
+    <!-- Product Preview Area -->
+    <div class="col-md-6 text-center">
+      <div id="productArea{{ loop.index }}" style="position: relative; display: inline-block; width: 100%; max-width: 400px; border: 1px solid #ccc;">
+        <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;"></div>
+        <img src="../../{{ t[3] }}" style="width:100%; height:auto;" />
+        <div class="customText draggable" id="customText{{ loop.index }}" data-x="0" data-y="0">Your Text</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="col-md-6">
+      <h4>{{ t[1] }}</h4>
+      <h3>₹{{ t[2] }}</h3>
+
+      <!-- Add Text -->
+      <div class="mb-3">
+        <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#textOptions{{ loop.index }}">
+          Add Text
+        </button>
+        <div class="collapse mt-3" id="textOptions{{ loop.index }}">
+          <input type="text" class="form-control mb-2 textInput" data-index="{{ loop.index }}" placeholder="Enter your text" />
+          <label class="form-label">Font Color</label>
+          <input type="color" class="form-control mb-2 textColor" data-index="{{ loop.index }}" value="#87CEEB" />
+        </div>
+      </div>
+
+      <!-- Gallery Toggle -->
+      <div class="mb-3">
+        <button class="btn btn-outline-secondary w-100 mb-2 toggleGalleryBtn" data-index="{{ loop.index }}">
+          <i class="bi bi-image"></i> Gallery
+        </button>
+
+        <div id="gallerySection{{ loop.index }}" class="sticker-gallery mb-3">
+          <img src="https://i.ibb.co/XsYMyXR/spiderman.png" alt="Spiderman" class="sticker-option" />
+          <img src="https://i.ibb.co/Z1P8DbP/ironman.png" alt="Ironman" class="sticker-option" />
+          <img src="https://i.ibb.co/F6D8BXz/thor.png" alt="Thor" class="sticker-option" />
+          <img src="https://i.ibb.co/zNrDW6x/hulk.png" alt="Hulk" class="sticker-option" />
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_to_bag') }}" class="addToCartForm" data-index="{{ loop.index }}">
+        <input type="hidden" name="prdct_id" value="{{ t[0] }}">
+        <input type="hidden" name="custom_image" class="customImageInput">
+        <button type="submit" class="btn btn-success w-100 mt-4 addToCartBtn">
+          🛒 Add to Bag
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Text update
+  document.querySelectorAll('.textInput').forEach(input => {
+    input.addEventListener('input', () => {
+      const index = input.dataset.index;
+      document.getElementById(`customText${index}`).textContent = input.value;
+    });
+  });
+
+  // Text color update
+  document.querySelectorAll('.textColor').forEach(colorPicker => {
+    colorPicker.addEventListener('input', () => {
+      const index = colorPicker.dataset.index;
+      document.getElementById(`customText${index}`).style.color = colorPicker.value;
+    });
+  });
+
+  // Toggle gallery
+  document.querySelectorAll('.toggleGalleryBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = btn.dataset.index;
+      const gallery = document.getElementById(`gallerySection${index}`);
+      gallery.style.display = gallery.style.display === 'flex' ? 'none' : 'flex';
+    });
+  });
+
+  // Add sticker
+  document.querySelectorAll('.sticker-option').forEach(sticker => {
+    sticker.addEventListener('click', function () {
+      const clone = this.cloneNode(true);
+      clone.classList.add('draggable', 'sticker');
+      clone.style.top = '150px';
+      clone.style.left = '150px';
+
+      // Append to the last active productArea
+      const lastIndex = document.querySelectorAll('.productArea').length;
+      const target = this.closest('.row').querySelector('[id^="productArea"]');
+      target.appendChild(clone);
+      makeDraggable(clone);
+    });
+  });
+
+  // Form submit
+  document.querySelectorAll('.addToCartForm').forEach(form => {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const index = form.dataset.index;
+      const btn = form.querySelector('.addToCartBtn');
+      const productArea = document.getElementById(`productArea${index}`);
+      const imageInput = form.querySelector('.customImageInput');
+
+      btn.disabled = true;
+      btn.textContent = '⏳ Processing...';
+
+      html2canvas(productArea).then(canvas => {
+        imageInput.value = canvas.toDataURL('image/jpeg', 0.8);
+        form.submit();
+      }).catch(() => {
+        btn.disabled = false;
+        btn.textContent = '🛒 Add to Bag';
+        alert('Failed to capture image.');
+      });
+    });
+  });
+
+  // Make all draggable
+  interact('.draggable').draggable({
+    listeners: {
+      move(event) {
+        const target = event.target;
+        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+        target.style.transform = `translate(${x}px, ${y}px)`;
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+      }
+    }
+  });
+});
+
+function makeDraggable(el) {
+  interact(el).draggable({
+    listeners: {
+      move(event) {
+        const target = event.target;
+        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+        target.style.transform = `translate(${x}px, ${y}px)`;
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+      }
+    }
+  });
+}
+</script>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+{% endblock %}

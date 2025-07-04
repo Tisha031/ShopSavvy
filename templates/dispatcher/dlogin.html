@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopSavvy Dispatcher</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('{{ url_for('static', filename='upload/image.png') }}') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding-left: 15%; /* Moved form slightly left */
+    }
+
+    .login-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(5px);
+    }
+    .login-container {
+      margin-right: 40px; /* fine-tuned position */
+    }
+
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #1e293b;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #475569;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    .form-note {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .forgot-password a {
+      font-size: 0.9rem;
+      color: #3b82f6;
+      text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <form class="login-container" method="POST" action="{{url_for('Dlogin')}}">
+    <h1 style="text-align: center; color: #0f172a; margin-bottom: 0.5rem; font-size: 2rem; text-shadow: 1px 1px #cbd5e1;">ShopSavvy</h1>
+    <h2>LOGIN</h2>
+
+    <input type="email" id="email" name="email" required placeholder="Enter Your Email Id" />
+    <input type="password" id="password" name="password" required placeholder="Enter Your Password" />
+    <div class="mt-3">
+      <button type="submit" name="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
+    </div>
+
+    <div class="forgot-password">
+      <a href="/recover-password">Forgot Password?</a>
+    </div>
+  </form>
+</body>
+</html>

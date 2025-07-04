@@ -1,0 +1,67 @@
+{% extends '/user/userlayout.html' %}
+{% block content %}
+        <!-- Wishlist Start -->
+        <div class="cart-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>IMAGE</th>
+                                        <th>NAME</th>
+                                        <th>PRICE</th>
+                                        <th>ADD TO CART</th>
+                                        <th>REMOVE</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                    {% for t in data %}
+                                    <tr>
+                                      <td>
+                                        <img src="../../{{ t.4 }}" alt="Image" />
+                                      </td>
+                                      <td>{{ t.2 }}</td>
+                                      <td class="price">{{ t.3 }}</td> 
+                                      
+                                      <td>
+                                        <a href="{{ url_for('addTocart', prdct_id=t[0]) }}" type="button">
+                                          <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </td>
+                                      <td>
+                                          <a href="{{ url_for('delete_wish', prdct_id=t[0]) }}" type="button">
+                                            <i class="fa fa-trash"></i> 
+                                          </a>
+                                      </td>
+                                    </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>   
+                                    {#  <tr>
+                                        <td><a href="#"><img src="/static/user/image/product-3.png" alt="Image"></a></td>
+                                        <td><a href="#">Product Name</a></td>
+                                        <td>$22</td>
+                                        <td>
+                                            <div class="qty">
+                                                <button class="btn-minus"><i class="fa fa-minus"></i></button>
+                                                <input type="text" value="1">
+                                                <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                        </td>
+                                        <td><button>Add to Cart</button></td>
+                                        <td><button><i class="fa fa-trash"></i></button></td>
+                                    </tr>  #}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Wishlist End -->
+        
+{% endblock %}
+
+        
+       
+     

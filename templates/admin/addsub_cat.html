@@ -1,0 +1,92 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+
+<style>
+    .form-group.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group.inline label {
+    flex: 1;
+}
+
+.form-group.inline input[type="checkbox"] {
+    margin-left: 10px;
+}
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          ADD SUBCATEGORY
+        </h3>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              
+              <form class="forms-sample" method="POST" action="{{url_for('addsubcatprocess')}}"  enctype="multipart/form-data">
+               
+
+                <div class="form-group">
+                  <label for="exampleInputcategory">Category<span style="color:red">*</span></label>
+                  <select class="form-control" name="cat_id" required>
+
+                    <option value=""disabled selected>Select category<span style="color:red">*</span></option>
+                      {% for cat in cat %}
+                       <option value="{{ cat[0] }}">{{ cat[1] }}</option>
+                     {% endfor %}
+
+                  </select>
+                </div>
+                
+
+                <div class="form-group">
+                  <label for="exampleInputcategory name">Subcategory Name <span style="color:red">*</span></label>
+                  <input type="text" class="form-control" id="exampleInputcategoryname" placeholder="Enter sub category name" name="subcat_name" required>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="exampleInputcategory description">Subcategory Description <span style="color:red">*</span></label>
+                  <input type="textarea" class="form-control" id="exampleInputcategorydesc" placeholder="Enter category description" name="supp_desc" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputimg">Image upload <span style="color:red">*</span></label>
+                    <input type="file" class="form-control" id="imageUpload" accept="image/*" onchange="validateFileType()" placeholder="JPG/PNG format" name="img" required> 
+                  </div>
+                  <button class="btn btn-light">Cancel</button> &nbsp; 
+                <button type="submit" name="submit" class="btn btn-primary mr-2">Add Subcategory</button> 
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}
+
+<script>
+  const imageInput = document.getElementById('imageUpload');
+
+  imageInput.addEventListener('change', function () {
+      const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // Allowed formats
+      const file = this.files[0]; // Get the selected file
+
+      if (file) {
+          if (!allowedExtensions.includes(file.type)) {
+              alert('Invalid file format! Please select a JPEG, PNG, GIF, or WebP image.');
+              this.value = ''; // Clear the input
+          }
+      }
+  });
+</script>

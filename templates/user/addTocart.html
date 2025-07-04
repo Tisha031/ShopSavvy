@@ -1,0 +1,108 @@
+{% extends '/user/userlayout.html' %}
+{% block content %}
+
+
+  {% with messages=get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for categories, message in messages %}
+        <script>
+          Toastify({
+            text: '{{ message }}',
+            duration: 3000,
+            close: true,
+            backgroundColor: 'green',
+            className: 'success-toast'
+          }).showToast()
+        </script>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+
+
+  <!-- Cart Start -->
+  <div class="cart-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive" style=" overflow-x: hidden; ">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody class="align-middle">
+                {% for t in cart %}
+                  <tr>
+
+                    <td>
+                      <img src="../../{{ t[5] }}" alt="{{ t.5 }}" />
+                    </td>
+
+                    <td>{{ t.4 }}</td>
+
+                    <td class="price">{{ t.6 }}</td> 
+
+                    <td>
+                      <div>
+                        <form action="{{ url_for('atcqty') }}" method="POST">
+                          <input type="hidden" name="id" value="{{ t.0 }}" />
+                          <button type="submit" class="update-btn" name="btn" value="min">-</button>
+                          <input type="text" name="qty" class="qty-input" value="{{ t.3 }}" readonly />
+                          <button type="submit" class="update-btn"  name ="btn" value="add">+</button>
+                        </form>
+                      </div>
+                    </td>
+                    <td class="total" id="total">₹{{ '%.2f'|format(t.6 * t.3) }}</td>
+
+                    <td>
+                        <a href="{{ url_for('delete_prdct', prdct_id=t[0]) }}" type="button">
+                          <i class="fa fa-trash"></i> 
+                        </a>
+                    </td>
+                    
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <!-- Cart Summary -->
+            <div class="row" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+              <div class="col-md-6">
+                <div class="cart-summary" style="background: #3b66a3; color: white; padding: 10px; border-radius: 10px; max-width: 500px;
+                                               box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+                  <div class="cart-content">
+                    <h3 style="margin: 0 0 10px;">CART SUMMARY</h3>
+                    <p style="display: flex; justify-content: space-between; margin: 5px 0;">
+                      Sub Total<span id="sub-total">₹{{total}}</span>
+                    </p>
+                    <p style="display: flex; justify-content: space-between; margin: 5px 0;">
+                      GST(5%)<span id="sub-total">₹{{gst}}</span>
+                    </p>
+                    <h4 id="grand-total" style="display: flex; justify-content: space-between; margin: 5px 0;">Grand Total<span id="grand-total-amount">₹{{gsttotal}}</span></h4>
+                    <div class="cart-btn" style="display: flex; justify-content: space-between; margin-top: 10px;">
+                      {#  <button style="background: white; color: #3b66a3; padding: 10px; border: none; cursor: pointer; border-radius: 3px;">Update Cart</button>  #}
+                    
+                        <a href="{{ url_for('checkoutdetail') }}"  class="text-decoration-none" type="button"
+                         style="background: white; color: #3b66a3; 
+                         padding: 10px; border: solid; cursor: pointer; ">
+                          CHECKOUT
+                        </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

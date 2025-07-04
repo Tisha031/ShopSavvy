@@ -1,0 +1,56 @@
+{% extends 'supplier/supplayout.html' %}
+{% block content %}
+  <div class="container">
+    <div class="page-inner">
+      <div class="page-header">
+        <h3 class="fw-bold mb-3">ADD CATEGORY</h3>
+        {#  <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#"><i class="icon-home"></i></a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Forms</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Basic Form</a>
+          </li>
+        </ul>  #}
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="card">
+            <label class="mt-2 mb-3"><b>ADD NEW CATEGORY</b></label>
+
+            <form class="forms-sample" method="POST" action="{{url_for('add_cat')}}">
+              
+
+            <div class="form-floating form-floating-custom mt-2 mb-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Enter category name" name="cat_name" required />
+              <label for="floatingInput">Category Name</span></label>
+            </div>
+            
+            <div class="form-floating form-floating-custom mt-2 mb-2">
+              <input type="text" class="form-control" id="floatingInput1" placeholder="Enter category description" name="description" required />
+              <label for="floatingInput">Category Description</label>
+            </div>
+            
+            <div class="card-action">
+              <button class="btn btn-danger">CANCEL</button>
+              <button class="btn btn-success">ADD NEWCATEGORY</button>
+              
+            </div>
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

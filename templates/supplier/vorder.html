@@ -1,0 +1,246 @@
+{% extends "supplier/supplayout.html" %}
+{% block content %}
+ 
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<style>
+
+/* Button (same as before) */
+.rounded-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.rounded-btn:hover {
+  background-color: #45a049;
+}
+
+/* Modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 300px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+</style>
+
+  <div class="container">
+    <div class="page-inner">
+      <h3 class="fw-bold mb-3">VIEW ORDERS</h3>
+      <div class="page-header">
+        
+        {#  <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#">
+              <i class="icon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Tables</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Datatables</a>
+          </li>
+        </ul>#}
+      </div>  
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              {#  <h4 class="card-title">Basic</h4>  #}
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table
+  id="basic-datatables"
+  class="display table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">CUSTOMER NAME</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">CONTACT</th>
+      <th scope="col">ADDRESS</th>
+      <th scope="col">PRODUCT NAME</th>
+      <th scope="col">PAYMENT METHOD</th>
+      <th scope="col">DATE</th>
+      <th scope="col">TOTAL AMOUNT</th>
+      <th scope="col">ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in cho %}
+    <tr>
+      <td>{{ i.2 }}</td>
+      <td>{{ i.3 }}</td>
+      <td>{{ i.4 }}</td>
+      <td>{{ i.5 }}</td>
+      <td>{{ i.22 }}</td>
+      <td>{{ i.20 }}</td>
+      <td>{{ i.19 }}</td>
+      <td>{{ i.21 }}</td>
+      <td><button class="rounded-btn" onclick="openModal()">Assign</button></td>
+
+      <div id="assignModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <h3>Order Assgin</h3>
+          <form action="{{url_for('transfer')}}" method="post">
+            <label for="status">Select Dispatcher:</label>
+            <input type="hidden" value="{{ i.0 }}" name="id">
+            <select id="disp_id" name="disp_id">
+              <option value="">-- Select --</option>
+              {% for i in disp %}
+              <option value="{{i[0]}}">{{i[1]}}</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <button class="rounded-btn" type="submit">Assign</button>
+          </form>
+        </div>
+      </div>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          $(document).ready(function () {
+            $("#basic-datatables").DataTable({});
+        
+            $("#multi-filter-select").DataTable({
+              pageLength: 5,
+              initComplete: function () {
+                this.api()
+                  .columns()
+                  .every(function () {
+                    var column = this;
+                    var select = $(
+                      '<select class="form-select"><option value=""></option></select>'
+                    )
+                      .appendTo($(column.footer()).empty())
+                      .on("change", function () {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        
+                        column
+                          .search(val ? "^" + val + "$" : "", true, false)
+                          .draw();
+                      });
+        
+                    column
+                      .data()
+                      .unique()
+                      .sort()
+                      .each(function (d, j) {
+                        select.append(
+                          '<option value="' + d + '">' + d + "</option>"
+                        );
+                      });
+                  });
+              },
+            });
+        
+            // Add Row
+            $("#add-row").DataTable({
+              pageLength: 5,
+            });
+        
+            var action =
+              '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+        
+            $("#addRowButton").click(function () {
+              $("#add-row")
+                .dataTable()
+                .fnAddData([
+                  $("#addName").val(),
+                  $("#addPosition").val(),
+                  $("#addOffice").val(),
+                  action,
+                ]);
+              $("#addRowModal").modal("hide");
+            });
+          });
+        </script>
+
+<script>
+  function openModal() {
+    document.getElementById('assignModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('assignModal').style.display = 'none';
+  }
+
+  function submitStatus() {
+    const status = document.getElementById('status').value;
+    if (status) {
+      alert('Order marked as: ' + status);
+      closeModal();
+    } else {
+      alert('Please select a status.');
+    }
+  }
+
+  // Close modal if clicking outside of it
+  window.onclick = function(event) {
+    const modal = document.getElementById('assignModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  }
+</script>
+
+        
+{% endblock %}
+
+

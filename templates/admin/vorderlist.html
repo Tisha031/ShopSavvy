@@ -1,0 +1,86 @@
+{% extends '/admin/adminlayout.html' %}
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+
+<!-- jQuery (required by DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- Initialize the DataTable -->
+<script>
+  $(document).ready(function() {
+    $('#order-listing').DataTable();
+  });
+</script>
+</head>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">
+        ORDER HISTORY
+      </h3>
+    
+    </div>
+ <div class="card">
+            <div class="card-body">
+              {#  <h4 class="card-title">Data table</h4>  #}
+              <div class="row">
+                <div class="col-12">
+                  
+         
+          <!-- Table -->
+           <div class="table-responsive">
+                    <table id="order-listing" class="table">
+              <thead>
+                
+                <tr>
+                  <th>CUSTOMER NAME</th>
+                  <th>EMAIL</th>
+                  <th>CONTACT</th>
+                  <th>ADDRESS</th>
+                  <th>PRODUCT NAME</th>
+                  <th>PAYMENT METHOD</th>
+                  <th>DATE</th>
+                  <th>TOTAL AMOUNT</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in data %}
+                <tr>
+                  <td>{{ i[2] }}</td>
+                  <td>{{ i[3] }}</td>
+                  <td>{{ i[4] }}</td>
+                  <td>{{ i[5] }}</td>
+                  <td>{{ i[22] }}</td>
+                  <td>{{ i[10] }}</td>
+                  <td>{{ i[19] }}</td>
+                  <td>{{ i[21] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+             
+           </table>
+
+           {#  <div class="d-flex justify-content-end mb-3">
+            <a href="{{ url_for('download_pdf') }}" class="btn btn-outline-primary">
+              <i class="fas fa-file-pdf"></i> Export PDF
+            </a>
+          </div>  #}
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock %}
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>

@@ -1,0 +1,35 @@
+{% extends "/user/userlayout.html" %}
+{% block content %}
+
+
+
+
+<div class="product-view">
+    <div class="container">
+      <div class="col-12">
+        <div class="row">
+          {% for j in kid %}
+            <div class="col-md-3">
+              <div class="product-item">
+                <div class="product-image" style="height:350px">
+                  <a href="{{ url_for('kid_list', id=j.0) }}"><img class="image" style="height:300px" src="../../{{ j.4 }}" alt="Product Image" /></a>
+
+                  
+                </div>
+
+                <div class="product-content">
+                 
+                  <div class="price">
+                    <a href=""><td><h5>{{ j.3 }}</h5></td></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

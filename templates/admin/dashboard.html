@@ -1,0 +1,77 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          Dashboard
+        </h3>
+      </div>
+      <div class="row grid-margin">
+        <div class="col-12">
+          <div class="card card-statistics">
+            <div class="card-body">
+              <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                  <div class="statistics-item">
+                    <p>
+                      <i class="icon-sm fa fa-user mr-2"></i>
+                      TOTAL ORDERS
+                    </p>
+                    
+                    <h2>{{ total_order }}</h2>
+                    
+                  </div>
+                  <div class="statistics-item">
+                    <p>
+                      <i class="icon-sm fas fa-hourglass-half mr-2"></i>
+                      TOTAL PRODUCT
+                    </p>
+                    <h2>{{ total_prdct }}</h2>
+                   
+                  </div>
+                  <div class="statistics-item">
+                    <p>
+                      <i class="icon-sm fas fa-cloud-download-alt mr-2"></i>
+                      TOTAL CUSTOMERS
+                    </p>
+                    <h2>{{ total_user }}</h2>
+                    
+                  </div>
+                  <div class="statistics-item">
+                    <p>
+                      <i class="icon-sm fas fa-check-circle mr-2"></i>
+                      TOTAL SUPPLIER
+                    </p>
+                    <h2>{{ total_supp }}</h2>
+                    
+                  </div>
+                  <div class="statistics-item">
+                    <p>
+                      <i class="icon-sm fas fa-chart-line mr-2"></i>
+                      TOTAL DISPATCHER
+                    </p>
+                    <h2>{{ total_disp }}</h2>
+                    
+                  </div>
+                  {#  <div class="statistics-item">
+                    <p>
+                      <i class="icon-sm fas fa-circle-notch mr-2"></i>
+                      Pending
+                    </p>
+                    <h2>7500</h2>
+                    <label class="badge badge-outline-danger badge-pill">16% decrease</label>
+                  </div>  #}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+    {% endblock %}

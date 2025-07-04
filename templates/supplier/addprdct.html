@@ -1,0 +1,105 @@
+{% extends 'supplier/supplayout.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+      <div class="page-header">
+        <h3 class="fw-bold mb-3">ADD PRODUCT</h3>
+        {#  <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="{{url_for('sdashboard')}}"><i class="icon-home"></i></a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Forms</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Basic Form</a>
+          </li>
+        </ul>  #}
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="card">
+            <label class="mt-2 mb-3"><b>ADD NEW PRODUCT</b></label>
+
+            <form class="forms-sample" method="POST" action="{{url_for('addprdct')}}">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">
+              Select Category</label>
+                <select
+                  class="form-select"
+                  id="cat_id">
+                  <option disabled selected>Select Category</option>
+                  {% for i in data %}
+                  <option value="{{i[0]}}">{{i[1]}}</option>
+                  {% endfor %}
+                </select>
+              </div> 
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">
+              Select Subcategory</label>
+                <select
+                  class="form-select"
+                  id="cat_id">
+                  <option disabled selected>Select Subcategory</option>
+                  {% for i in data %}
+                  <option value="{{i[0]}}">{{i[1]}}</option>
+                  {% endfor %}
+                </select>
+              </div> 
+
+             
+            <div class="form-floating form-floating-custom mt-2 mb-2">
+              <input type="text" class="form-control" id="floatingInput1" placeholder="Enter product name" name="prdct_name" required />
+              <label for="floatingInput">Product Name</label>
+            </div>
+            <div class="form-floating form-floating-custom mt-2 mb-2">
+              <input type="text" class="form-control" id="floatingInput1" placeholder="Enter product description" name="description" required />
+              <label for="floatingInput">Product Description</label>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <span class="input-group-text">₹</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="Amount (to the nearest dollar)"
+                />
+                <span class="input-group-text">.00</span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="exampleFormControlFile1">
+                Image upload</label>
+              <input
+                type="file"
+                class="form-control-file"
+                id="exampleFormControlFile1"/>
+            </div>
+
+            <div class="card-action">
+              <button class="btn btn-danger">CANCEL</button>
+              <button class="btn btn-success">ADD NEW PRODUCT</button>
+              
+            </div>
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

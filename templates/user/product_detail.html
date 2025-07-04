@@ -1,0 +1,116 @@
+{% extends '/user/userlayout.html' %}
+{% block content %}
+<div class="product-detail">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row align-items-center product-detail-top">
+          <div class="col-md-5">
+            <div class="product-slider-single">
+              <img src="../../{{ t[4] }}" alt="Product Image" />
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="product-content">
+              <div class="title">
+                <h2>{{ t[2] }}</h2>
+              </div>
+
+              <div class="details">
+                <h6>Product Description: {{ t[5] }}</h6>
+              </div>
+
+              <div class="quantity">
+                <h5>Price: ₹{{ t[3] }}</h5>
+                </div>
+
+              <!-- Size Selection -->
+              {#  <div class="mb-3">
+                <label class="form-label"><strong>Select Size</strong></label>  #}
+                {#  <div class="d-flex flex-wrap gap-2 mt-2" id="sizeButtons">
+                  {% for size in ['XS', 'S', 'M', 'L', 'XL', '2XL'] %}
+                  <button type="button" class="btn btn-outline-dark size-btn" data-size="{{ size }}">{{ size }}</button>
+                  {% endfor %}
+                </div>  
+                <input type="hidden" name="selectedSize" id="selectedSize">
+              </div>#}
+
+             
+
+              <!-- Action Buttons -->
+              <div class="action">
+                <a href="{{ url_for('addTocart', prdct_id=t[0]) }}"><i class="fa fa-cart-plus"></i></a> &nbsp;&nbsp;
+                <a href="{{ url_for('wishlist', prdct_id=t[0]) }}"><i class="fa fa-heart"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Related Products -->
+          <div class="recent-product mt-5">
+            <div class="container">
+              <div class="section-header">
+                <h3>RELATED PRODUCTS</h3>
+              </div>
+              <div class="row align-items-center product-slider product-slider-4">
+                {% for i in rec %}
+                {% if i[0] != t[0] %}
+                <div class="col-lg-3">
+                  <div class="product-item">
+                    <div class="product-image">
+                      <a href="{{ url_for('product_detail', prdct_id=i[0]) }}">
+                        <img src="../../{{ i[4] }}"  alt="Product Image">
+                      </a>
+                      <div class="product-action">
+                        <a href="{{ url_for('addTocart', prdct_id=i[0]) }}"><i class="fa fa-cart-plus"></i></a>
+                        <a href="{{ url_for('wishlist', prdct_id=i[0]) }}"><i class="fa fa-heart"></i></a>
+                      </div>
+                    </div>
+                    <div class="product-content">
+                      <div class="title">{{ i[2] }}</div>
+                      <div class="price">₹{{ i[3] }}</div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Size Selector Styles -->
+<style>
+  .size-btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    min-width: 60px;
+    transition: all 0.2s ease;
+  }
+
+  .size-btn.selected {
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+  }
+</style>
+
+<!-- Size Selector Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".size-btn");
+    const hiddenInput = document.getElementById("selectedSize");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        hiddenInput.value = btn.dataset.size;
+      });
+    });
+  });
+</script>
+{% endblock %}

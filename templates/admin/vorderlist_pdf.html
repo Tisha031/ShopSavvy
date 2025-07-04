@@ -1,0 +1,61 @@
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 6px;
+      text-align: left;
+    }
+    h4 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+
+
+
+<div class="content-wrapper">
+    <h4 class="card-title">CUSTOMER ORDERLIST</h4>
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>CUSTOMER NAME</th>
+                    <th>EMAIL</th>
+                    <th>CONTACT</th>
+                    <th>ADDRESS</th>
+                    <th>PRODUCT NAME</th>
+                    <th>PAYMENT METHOD</th>
+                    <th>DATE</th>
+                    <th>TOTAL AMOUNT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 {% for i in data %}
+                  <tr>
+                    <td>{{i[2]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>{{i[5]}}</td>
+                    <td>{{i[20]}}</td>
+                    <td>{{i[10]}}</td>
+                    <td>{{i[17]}}</td>
+                    <td>{{i[19]}}</td>
+                  </tr>
+                 {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ShopSavvy Tax Invoice</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      font-size: 12pt;
+      margin: 40px;
+      color: #000;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      padding: 0;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 5px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .product-table th {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+
+    .summary {
+      margin-top: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 10pt;
+      margin-top: 40px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <table>
+    <tr>
+      <td><img src="/static/upload/LOGOS.jpeg" width="120" /></td>
+    </tr>
+  </table>
+
+  <h1 align="center">ShopSavvy</h1>
+  <h2 align="center">BILL INVOICE</h2>
+
+  <table>
+    <tr>
+      <td>
+        <p><strong>DATE AND TIME:</strong> {{ data[0].date }}</p>
+        <p><strong>ORDER ID:</strong> {{ data[0].order_num }}</p>
+
+        <p class="section-title">BILLING ADDRESS</p>
+        <p>
+          Name: {{ data[0].name }}<br />
+          Number: {{ data[0].mobile }}<br />
+          Address: {{ data[0].address }}<br />
+          {{ data[0].city }}, {{ data[0].state }} - {{ data[0].pin_code }}<br />
+          India
+        </p>
+      </td>
+      <td>
+        <p class="section-title">BILL FROM LOCATION</p>
+        <p>
+          ShopSavvy Warehouse<br />
+          G-3, Ananta Stallion, Gotri - Sevasi Rd<br />
+          Vadodara, Gujarat 391101
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <p class="section-title">PRODUCTS</p>
+  <table class="product-table">
+    <tr>
+      <th>NAME OF PRODUCTS</th>
+      <th>TOTAL QUANTITY</th>
+      <th>PAYMENT MODE</th>
+      <th>TOTAL AMOUNT</th>
+    </tr>
+    <tr>
+      <td>
+        <ul>
+          {% for product in data[0].products %}
+            <li>{{ product }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+      
+      <td>{{ data[0].total_qty }}</td>
+      <td>{{ data[0].pymnt_method }}</td>
+      <td>RS.{{ data[0].total_amt }}</td>
+    </tr>    
+  </table>
+
+  <div class="summary">
+    <p><strong>SHIPPING CHARGES:</strong> Free</p>
+    {#  <p><strong>Payment Mode:</strong></p>  #}
+    <p><strong>TOTAL AMOUNT:</strong> Rs.{{ data[0].total_amt }}</p>
+  </div>
+
+  <div class="footer">
+    © 2025 ShopSavvy. GST levied at applicable rates. Covered under reverse charge: No.
+  </div>
+
+</body>
+</html>

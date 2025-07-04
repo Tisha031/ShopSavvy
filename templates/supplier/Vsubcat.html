@@ -1,0 +1,56 @@
+{% extends 'supplier/supplayout.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">VIEW SUBCATEGORY</div>
+            </div>
+            <div class="card-body">
+        <table
+          class="table table-bordered table-head-bg-info table-bordered-bd-info mt-3">
+          <thead>
+            <tr>
+                <th scope="col">NO</th>
+                <th scope="col">CATEGORY</th>
+                <th scope="col">SUBCATEGORY</th>
+                <th scope="col">SUBCATEGORY DESCRIPTION</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set count = 1 %}
+            {% for t in doo %}
+              {% set count = loop.index %}
+
+              <tr>
+                <td>{{ count }}</td>
+                <td>{{ t.6 }}</td>
+                <td>{{ t.3 }}</td>
+                <td>{{ t.5 }}</td>
+             
+
+                <td>
+                  <img style="height: 80px; width: 85px" src="../{{ t.4 }}" />
+                </td> <td>
+                  
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends '/admin/adminlayout.html' %}
+{% block content %}
+
+
+<div class="content-wrapper">
+    <h4 class="card-title">STOCK LIST</h4>
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>NO</th>
+                    <th>PRODUCT NAME</th>
+                    <th>QUANTITY</th>
+                    <th>IMAGE</th>
+                    <th>ACTION</th>
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  {% set count = 1 %}
+                  {% for p in see %}
+                    {% set count = loop.index %}
+                    <tr>
+                      <td>{{ count }}</td>
+                      <td>{{ p.2 }}</td>
+                      <td>{{ p.6 }}</td>
+                      <td><img style="height: 50px; width: 50px" src="../{{ p.4 }}" /></td>
+                      <td>
+                        <form action="{{ url_for('add_stock_post') }}" method="post" style="display: flex; align-items: center;">
+                          <input type="hidden" name="product_id" value="{{ p[0] }}">
+  
+                          <input type="number" name="quantity" value="1" min="1" 
+                                 style="width: 60px; font-size: 18px; text-align: center; margin-right: 10px;">
+  
+                          <button type="submit" name="btn" value="add" title="Add Stock"
+                                  style="font-size: 24px; padding: 10px; margin-right: 5px;">
+                            <i class="fa fa-plus-square"></i>
+                          </button>
+  
+                          <button type="submit" name="btn" value="del" title="Remove Stock"
+                                  style="font-size: 24px; padding: 10px;">
+                            <i class="fa fa-minus-square"></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

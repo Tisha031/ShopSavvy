@@ -1,0 +1,56 @@
+{% extends "/user/userlayout.html" %}
+{% block content %}
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  Toastify({
+                      text: "{{ message|e }}",
+                      duration: 3000,
+                      close: true,
+                      backgroundColor: "orange",
+                      className: "error-toast"
+                  }).showToast();
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+  });
+</script>
+  <div class="product-view">
+    <div class="container">
+      <div class="col-12">
+        <div class="row">
+          {% for i in sho %} 
+            <div class="col-md-3">
+              <div class="product-item">
+                <div class="product-image" style="height:350px; ">
+                  <a href="{{ url_for('product_detail', prdct_id=i.4) }}">
+                    <img class="image" style="height: 350px;" src=" ../../{{ i.8 }} " alt="Product Image" />
+                  </a>
+                  <div class="product-action">
+                    <a href="{{ url_for('addTocart', prdct_id=i.4) }}"><i class="fa fa-cart-plus"></i></a>
+                    <a href="{{ url_for('wishlist', prdct_id=i.4) }}"><i class="fa fa-heart"></i></a>
+                  </div>
+                </div>
+                <div class="product-content">
+                  <div class="title">
+                    <td>{{ i.6 }}</td>
+                  </div>
+                  <div class="price">
+                  <td>₹{{ i.7 }}</td>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'supplier/supplayout.html'%}
+{% block content%}
+<head>
+  <!-- DataTables Bootstrap 5 CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+<!-- Initialize DataTable -->
+{#  <script>
+  $(document).ready(function() {
+    $('#order-listing').DataTable();
+  });
+</script>  #}
+
+</head>
+        <div class="container">
+          <div class="page-inner">
+            <div
+              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">DASHBOARD</h3>
+               
+              </div>
+            
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-primary bubble-shadow-small">
+                          <i class="fas fa-users"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-6 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">TOTAL PRODUCTS</p>
+                          <h4 class="card-title">{{ tl_prdct }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-info bubble-shadow-small">
+                          <i class="fas fa-user-check"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">TOTAL CUSTOMER</p>
+                          <h4 class="card-title">{{ tl_user }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-success bubble-shadow-small">
+                          <i class="fas fa-luggage-cart"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">TOTAL <br>ORDER</p>
+                          <h4 class="card-title">{{ tl_order }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-secondary bubble-shadow-small">
+                          <i class="far fa-check-circle"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category">TOTAL DISPATCHER</p>
+                          <h4 class="card-title">{{ tl_disp }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      {#  <div class="card-body p-0">
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <table id="order-listing" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Payment Number</th>
+                <th>Date &amp; Time</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in ho %}
+              <tr>
+                <td>{{ i['payment_number'] }}</td>
+                <td>{{ i['date'] }}</td>
+                <td>{{ i['amount'] }}</td>
+                <td>{{ i['status'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>  #}
+ 
+          </div>
+        </div>
+                    </li>
+
+
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-between">
+            <nav class="pull-left">
+              <ul class="nav">
+                <li class="nav-item">
+                  {#  <a class="nav-link" href="http://www.themekita.com">
+                    ThemeKita
+                  </a>  #}
+                </li>
+                <li class="nav-item">
+                  {#  <a class="nav-link" href="#"> Help </a>  #}
+                </li>
+                <li class="nav-item">
+                  {#  <a class="nav-link" href="#"> Licenses </a>  #}
+                </li>
+              </ul>
+            </nav>
+            <div class="copyright">
+             made with <i class="fa fa-heart heart text-danger"></i> by
+              TISHA JINGER</a>
+            </div>
+            {#  <div>
+              Distributed by
+              <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
+            </div>  #}
+          </div>
+        </footer>
+      </div>
+    </div>
+    {%endblock%}
+
+
+ 

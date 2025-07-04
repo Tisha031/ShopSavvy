@@ -1,0 +1,114 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+
+<style>
+    .form-group.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group.inline label {
+    flex: 1;
+}
+
+.form-group.inline input[type="checkbox"] {
+    margin-left: 10px;
+}
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          EDIT PRODUCT
+        </h3>
+      </div>
+      
+      <div class="row">
+        <div class="col-11 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+            
+
+                
+              
+                <form class="forms-sample" method="POST" action="{{url_for('edit_prdct_process')}}" enctype="multipart/form-data">
+                  <input type="hidden" class="form-control" id="exampleInputprdctname" value="{{i[4]}}" name="prdct_id" >
+
+                <div class="form-group">
+                  <label for="exampleInputcategory">Category *</label>
+                  <select class="form-control" name="cat_id" required>
+
+                    <option value="">Select category</option>
+                      {% for category in category %}
+                       <option value="{{ category[0] }}" {% if category[0] == i[5] %}selected{% endif %}>{{ category[1] }}</option>
+                       {% endfor %}
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="exampleInputproduct name">Product Name *</label>
+                  <input type="text" class="form-control" id="exampleInputproductname" value="{{i[6]}}" name="prdct_name" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputproduct description">Product Description *</label>
+                  <textarea class="form-control" id="exampleInputdesc"  name="description">{{i[9]}}</textarea>
+                </div>
+                 
+                
+
+                  <div class="form-group">
+                  <label for="exampleInputpp">Price *</label>
+                  <input type="number" class="form-control" id="exampleInputpp" value="{{i[7]}}"  name="price">
+                </div>
+
+                {#  <div class="form-group">
+                  <label for="exampleInputstatus">Status *</label>
+                  <select class="form-control" name="p_status" value="{{i[11]}}">
+                    <option value="0">Pending</option>
+                    <option value="1">In Stock</option>
+                    <option value="2">Out of Stock</option>
+                  </select>
+                </div>  #}
+                
+                <div class="form-group">
+                  <label for="exampleInputimg">Image upload *</label>
+                    <input type="file" class="form-control" id="imageUpload" accept="image/*" value="{{i[8]}}" onchange="validateFileType()" placeholder="JPG/PNG format" name="p_image">
+                    <img src="../../{{i[8]}}" height="70" width="70">
+                  </div>
+                
+
+                <button class="btn btn-light">Cancel </button> &nbsp; 
+                <button type="submit" name="submit" class="btn btn-primary mr-2">Update Product</button>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+<script>
+  const imageInput = document.getElementById('imageUpload');
+
+  imageInput.addEventListener('change', function () {
+      const allowedExtensions = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // Allowed formats
+      const file = this.files[0]; // Get the selected file
+
+      if (file) {
+          if (!allowedExtensions.includes(file.type)) {
+              alert('Invalid file format! Please select a JPEG, PNG, GIF, or WebP image.');
+              this.value = ''; // Clear the input
+          }
+      }
+  });
+</script>

@@ -1,0 +1,82 @@
+{% extends 'supplier/supplayout.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+      <div class="page-header">
+        <h3 class="fw-bold mb-3">ADD SUBCATEGORY</h3>
+        {#  <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#"><i class="icon-home"></i></a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Forms</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">Basic Form</a>
+          </li>
+        </ul>  #}
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="card">
+            <label class="mt-2 mb-3"><b>ADD NEW SUBCATEGORY</b></label>
+
+            <form class="forms-sample" method="POST" action="{{url_for('Asubcat')}}" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">
+                Select Category</label>
+                  <select
+                    class="form-select"
+                    id="cat_id">
+                    <option disabled selected>Select Category</option>
+                    {% for i in data %}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              
+
+            <div class="form-floating form-floating-custom mt-2 mb-2">
+              <input type="text" class="form-control" id="floatingInput" placeholder="Enter category name" name="subcat_name" required />
+              <label for="floatingInput">Subcategory Name</span></label>
+            </div>
+            
+            <div class="form-floating form-floating-custom mt-2 mb-2">
+              <input type="text" class="form-control" id="floatingInput1" placeholder="Enter Subcategory description" name="supp_desc" required />
+              <label for="floatingInput">Subcategory Description</label>
+            </div>
+			
+	            <div class="form-group">
+              <label for="exampleFormControlFile1">
+                Image upload</label>
+              <input
+                type="file" name="img"
+                class="form-control-file"
+                id="exampleFormControlFile1"/>
+            </div>
+             
+            <div class="card-action">
+              <button type="reset" class="btn btn-danger">CANCEL</button>
+              <button type="submit" class="btn btn-success">ADD NEW SUBCATEGORY</button>
+              
+            </div>
+            
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+
+

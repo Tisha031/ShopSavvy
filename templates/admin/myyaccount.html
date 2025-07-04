@@ -1,0 +1,22 @@
+{% extends '/admin/adminlayout.html' %}
+{% block content %}
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">MY ACCOUNT</h4>
+      </div>
+      <div class="card-body">
+        <p class="demo"></p>
+        <div class="row">
+          <div class="avatar avatar-xxl col-3">
+            <img src="/static/admin/images/faces/admin.jpg" alt="..." class="avatar-img rounded-circle" />
+          </div>        
+          <div class="col-6">
+           
+            <a class="btn btn-light btn-fw" href="{{url_for('editprofile')}}">EDIT PROFILE</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

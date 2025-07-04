@@ -1,0 +1,38 @@
+{% extends "supplier/supplayout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="page-inner">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">MY PROFILE</div>
+            </div>
+            <div class="card-body">
+
+              <form class="forms-sample" method="POST" action="{{url_for('Sprofile')}}">
+             
+                <input class="form-control" type="text"  name="supp_id" hidden>
+
+                <div class="col">
+                  <label>Email</label>
+                  <input class="form-control" type="email" value="{{session['email_id']}}" name="email_id" readonly>
+                </div>
+             
+
+             
+               
+              </div> 
+            </form>
+
+
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %} 

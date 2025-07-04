@@ -1,0 +1,54 @@
+{% extends 'supplier/supplayout.html' %}
+{% block content %}
+  <div class="container">
+    <div class="page-inner">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">VIEW PRODUCT</div>
+            </div>
+            <div class="card-body">
+              <table class="table mt-3">
+                <thead>
+                  <tr>
+                    <th scope="col">NO</th>
+                    <th scope="col">CATEGORY</th>
+                    <th scope="col">SUBCATEGORY</th>
+                    <th scope="col">PRODUCT NAME</th>
+                    <th scope="col">PRICE</th>
+                    <th scope="col">PRODUCT IMAGE</th>
+                    <th scope="col">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% set count = 1 %}
+                  {% for l in lol %}
+                    {% set count = loop.index %}
+
+                    <tr>
+                      <td>{{ count }}</td>
+                      <td>{{ l.1 }}</td>
+                      <td>{{ l.13 }}</td>
+                      <td>{{ l.6 }}</td>
+                      <td>{{ l.7 }}</td>
+
+                      <td>
+                        <img style="height: 80px; width: 85px" src="../{{ l.8 }}" />
+                      </td> <td>
+                        <div class="form-button-action">
+                           type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg"><i class="fa fa-edit"></i></a>
+                          <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

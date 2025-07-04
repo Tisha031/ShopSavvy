@@ -1,0 +1,101 @@
+{% extends 'supplier/supplayout.html' %}
+
+{% block content %}
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- SweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <div class="container">
+    <div class="page-inner">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">VIEW CATEGORY</div>
+            </div>
+            <div class="card-body">
+              <table class="table mt-3">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Category Description</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for t in see %}
+                    <tr>
+                      <td>{{ loop.index }}</td>
+                      <td>{{ t.1 }}</td>
+                      <td>{{ t.2 }}</td>
+                      <td>
+                        <div class="form-button-action d-flex gap-2">
+                          <form>
+                            <a href="{{ url_for('seditcat', cat_id=t.0) }}" class="btn btn-link btn-primary btn-lg" >
+                              <i class="fa fa-edit"></i>
+                            </a>
+                          </form>
+                          <form>
+                            <button
+                              type="button"
+                              class="btn btn-danger btn-link delete-btn"
+                              data-id="{{ t.0 }}"
+
+                              data-catname="{{ t.1 }}">
+                              <i class="fa fa-times"></i>
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                    <script>
+                      $(document).ready(function () {
+                        $(".delete-btn").click(function () {
+                          const catId = $(this).data("id");
+                          const catName = $(this).data("name");
+                    
+                          swal({
+                            title: "Are you sure?",
+                            text: `You are about to delete the category "${catName}".`,
+                            icon: "warning",
+                            buttons: {
+                              cancel: {
+                                text: "Cancel",
+                                visible: true,
+                                className: "btn btn-danger",
+                              },
+                              confirm: {
+                                text: "Yes, delete it!",
+                                className: "btn btn-success",
+                              },
+                            },
+                          }).then((willDelete) => {
+                            if (willDelete) {
+                              // Redirect to Flask route for deletion
+                              window.location.href = `/supplier/sdelete_category/${catId}`;
+                            }
+                          });
+                        });
+                      });
+                    </script>
+                    
+                    
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+ 
+{% endblock %}

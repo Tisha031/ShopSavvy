@@ -1,0 +1,63 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+
+{% if msg %}
+<script> 
+alert('{{msg}}') 
+</script>
+{% endif %}
+
+<style>
+    .form-group.inline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group.inline label {
+    flex: 1;
+}
+
+.form-group.inline input[type="checkbox"] {
+    margin-left: 10px;
+}
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">
+          EDIT CATEGORY
+        </h3>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              {% set j = category[0] %}
+
+              <form class="forms-sample" method="POST" action="{{ url_for('edit_cat_process') }}">
+                <input type="hidden" name="cat_id" value="{{ j[0] }}">
+  
+                <div class="form-group">
+                  <label for="exampleInputcategoryname">Category Name</label>
+                  <input type="text" class="form-control" id="exampleInputcategoryname" name="cat_name" value="{{ j[1] }}">
+                </div>
+  
+                <div class="form-group">
+                  <label for="exampleInputcategorydesc">Category Description</label>
+                  <textarea class="form-control" id="exampleInputcategorydesc" name="description">{{ j[2] }}</textarea>
+                </div>
+  
+                <a href="{{ url_for('viewcategory') }}" class="btn btn-light">Cancel</a> &nbsp;
+                <button type="submit" class="btn btn-primary mr-2">Update Category</button>
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% endblock %}
